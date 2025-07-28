@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sharp Cut - Book an Appointment</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>💈 The Sharp Cut Barbershop</h1>
+            <p>Book Your Next Appointment Online</p>
+        </header>
+
+        <main>
+            <section id="services-section">
+                <h2>Our Services</h2>
+                <ul id="services-list">
+                    </ul>
+            </section>
+
+            <section id="booking-section">
+                <h2>Book Now</h2>
+                <form id="booking-form">
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="service">Choose a Service:</label>
+                    <select id="service-select" name="service" required>
+                        </select>
+
+                    <label for="date">Select a Date:</label>
+                    <input type="date" id="date" name="date" required>
+
+                    <label for="time">Select a Time:</label>
+                    <input type="time" id="time" name="time" required>
+
+                    <button type="submit">Book Appointment</button>
+                </form>
+                <p id="success-message" class="hidden"></p>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
