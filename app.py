@@ -1,23 +1,33 @@
-# app.py
-
 import os
 from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 
-# --- Database Setup ---
+# --- App Initialization and Configuration ---
+
 # Get the absolute path of the directory containing this script
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
-# Configure the SQLite database, naming it 'appointments.db'
+
+# --- Database Configuration ---
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'appointments.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Initialize the database object
 db = SQLAlchemy(app)
 
+# --- Mail Configuration ---
+# IMPORTANT: Set your email and password as environment variables in your terminal
+# export MAIL_USERNAME='your-email@gmail.com'
+# export MAIL_PASSWORD='your-gmail-app-password'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+mail = Mail(app)
+
+
 # --- Database Model ---
-# This class defines the structure of the 'appointment' table in our database
 class Appointment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -32,22 +42,20 @@ class Appointment(db.Model):
 
 # --- Routes ---
 
-# Main route to serve the single-page application
 @app.route('/')
 def index():
+    """Serves the main HTML page."""
     return render_template('index.html')
 
-# Booking route that receives form data from the new frontend
+
 @app.route('/book-appointment', methods=['POST'])
 def book_appointment():
-    # Get the JSON data sent from the JavaScript fetch call
+    """Receives booking data, saves it to the database, and sends an email notification."""
     data = request.get_json()
 
-    # Basic validation to ensure all required data is present
     if not all(key in data for key in ['name', 'email', 'service', 'date', 'time']):
         return jsonify({'message': 'Missing data in request'}), 400
 
-    # Create a new Appointment object using the data
     new_appointment = Appointment(
         name=data['name'],
         email=data['email'],
@@ -56,21 +64,38 @@ def book_appointment():
         time=data['time']
     )
 
-    # Add the new appointment to the database session and commit to save it
     try:
+        # Save to database
         db.session.add(new_appointment)
         db.session.commit()
-        # Return a success message
+
+        # Send email notification to yourself
+        msg_title = f"New Booking Request from {data['name']}"
+        sender = app.config['MAIL_USERNAME']
+        msg = Message(msg_title, sender=sender, recipients=[sender])
+        msg.body = f"""
+        You have a new appointment request:
+
+        Name:    {data['name']}
+        Email:   {data['email']}
+        Service: {data['service']}
+        Date:    {data['date']}
+        Time:    {data['time']}
+        """
+        mail.send(msg)
+        
         return jsonify({'message': 'Your appointment has been successfully requested!'}), 201
+
     except Exception as e:
-        # If there's an error, roll back the session and return an error message
         db.session.rollback()
-        print(f"Database Error: {e}")
+        print(f"Error: {e}") # Log the error for debugging
         return jsonify({'message': 'An error occurred while booking.'}), 500
 
-# This runs the app when you execute 'python3 app.py'
+
+# --- Run Application ---
+
 if __name__ == '__main__':
-    # This block ensures the database and tables are created before the app starts
+    # Creates the database and tables if they don't exist before running the app
     with app.app_context():
         db.create_all()
     app.run(debug=True)
