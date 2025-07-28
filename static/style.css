@@ -1,11 +1,23 @@
 :root {
+    /* Dark Mode (Default) */
+    --bg-color: #121212;
+    --surface-color: #1E1E1E;
+    --primary-text: #F5F5F5;
+    --secondary-text: #A9A9A9;
     --gold: #D4AF37;
-    --charcoal: #36454F;
-    --black: #121212;
-    --white: #F5F5F5;
+    --black: #000000;
+    
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Montserrat', sans-serif;
     --nav-height: 70px;
+}
+
+/* Light Mode Theme */
+body.light-mode {
+    --bg-color: #F5F5F5;
+    --surface-color: #FFFFFF;
+    --primary-text: #121212;
+    --secondary-text: #555555;
 }
 
 /* Pre-loader */
@@ -15,7 +27,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--black);
+    background-color: var(--bg-color);
     z-index: 9999;
     display: flex;
     justify-content: center;
@@ -49,7 +61,7 @@
     top: 0;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s, background-color 0.3s;
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
     z-index: 10000;
 }
 .custom-cursor.grow {
@@ -70,10 +82,11 @@ html {
 }
 body {
     font-family: var(--font-body);
-    background-color: var(--black);
-    color: var(--white);
+    background-color: var(--bg-color);
+    color: var(--primary-text);
     line-height: 1.6;
-    cursor: none; /* Hide default cursor */
+    cursor: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .container {
     max-width: 1100px;
@@ -115,10 +128,10 @@ section {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(18, 18, 18, 0.8);
+    background: color-mix(in srgb, var(--bg-color) 80%, transparent);
     backdrop-filter: blur(10px);
     height: var(--nav-height);
-    transition: background 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 .main-nav {
     display: flex;
@@ -138,7 +151,7 @@ section {
     gap: 2rem;
 }
 .nav-link {
-    color: var(--white);
+    color: var(--primary-text);
     text-decoration: none;
     transition: color 0.3s ease;
     padding-bottom: 5px;
@@ -157,6 +170,17 @@ section {
 .nav-link:hover::after, .nav-link.active::after {
     width: 100%;
 }
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.theme-toggle-btn .fa-sun { display: none; }
+.light-mode .theme-toggle-btn .fa-sun { display: inline-block; }
+.light-mode .theme-toggle-btn .fa-moon { display: none; }
+
 
 /* Hero Section */
 .hero {
@@ -169,23 +193,32 @@ section {
     color: var(--white);
     padding: 0 1rem;
 }
+body.light-mode .hero {
+    background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('/static/hero-bg.jpg') no-repeat center center/cover;
+}
 .hero-headline {
     font-family: var(--font-heading);
     font-size: 4rem;
     color: var(--gold);
     margin-bottom: 1rem;
-    /* This helps contain the animating characters */
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 }
+.hero-subheadline {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--white);
+}
+body.light-mode .hero-subheadline {
+    color: var(--primary-text);
+}
 
-/* Services Section */
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+
+/* Services, Booking, Testimonials, Contact */
+.service-card, .booking-section, .testimonial-card, .contact-section {
+    background-color: var(--surface-color);
+    transition: background-color 0.3s ease;
 }
 .service-card {
-    background: var(--charcoal);
     padding: 2.5rem;
     text-align: center;
     border-radius: 10px;
@@ -206,11 +239,6 @@ section {
     margin-bottom: 1rem;
     font-size: 1.5rem;
 }
-
-/* Booking Section */
-.booking-section {
-    background-color: var(--charcoal);
-}
 .booking-form {
     max-width: 600px;
     margin: 0 auto;
@@ -221,9 +249,9 @@ section {
 .form-group input, .form-group select {
     width: 100%;
     padding: 1rem;
-    background: var(--black);
-    border: 1px solid var(--charcoal);
-    color: var(--white);
+    background: var(--bg-color);
+    border: 1px solid var(--surface-color);
+    color: var(--primary-text);
     border-radius: 5px;
     font-family: var(--font-body);
 }
@@ -236,20 +264,11 @@ section {
     margin-top: 1rem;
     padding: 1rem;
     border-radius: 5px;
-    display: none; /* Hidden by default */
+    display: none;
 }
-.form-message.success {
-    background-color: #28a745;
-    color: white;
-}
-.form-message.error {
-    background-color: #dc3545;
-    color: white;
-}
-
-/* Testimonials Section */
+.form-message.success { background-color: #28a745; color: white; }
+.form-message.error { background-color: #dc3545; color: white; }
 .testimonial-card {
-    background: var(--charcoal);
     padding: 2rem;
     border-radius: 10px;
     margin-bottom: 2rem;
@@ -259,11 +278,6 @@ section {
     font-style: italic;
     font-size: 1.1rem;
     margin-bottom: 1rem;
-}
-
-/* Contact Section */
-.contact-section {
-    background-color: var(--charcoal);
 }
 .contact-grid {
     display: grid;
@@ -282,18 +296,44 @@ section {
 
 /* Footer */
 .main-footer {
-    background-color: var(--black);
+    background-color: var(--bg-color);
     text-align: center;
     padding: 2rem 0;
-    border-top: 1px solid var(--charcoal);
+    border-top: 1px solid var(--surface-color);
+    transition: background-color 0.3s ease, border-top-color 0.3s ease;
+}
+
+/* Back to Top Button */
+.back-to-top-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--gold);
+    color: var(--black);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    text-decoration: none;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.back-to-top-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .section-title { font-size: 2rem; }
     .hero-headline { font-size: 3rem; }
-    .nav-menu {
-        display: none; /* A burger menu would be needed for a full app */
-    }
+    .nav-menu { display: none; }
     .contact-grid { grid-template-columns: 1fr; }
 }

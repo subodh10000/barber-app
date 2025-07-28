@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barber-App | Sharp Cuts. Smooth Style.</title>
+    <title>Mr. SK | Sharp Cuts. Smooth Style.</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,7 @@
 
     <header class="main-header">
         <nav class="main-nav container">
-            <a href="#home" class="nav-logo">Barber-App</a>
+            <a href="#home" class="nav-logo">Mr. SK</a>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
@@ -32,6 +32,10 @@
                 <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
+            <button id="theme-toggle" class="theme-toggle-btn">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
         </nav>
     </header>
 
@@ -40,7 +44,7 @@
             <div class="hero-content">
                 <h1 class="hero-headline">Sharp Cuts. Smooth Style.</h1>
                 <p class="hero-subheadline" data-aos="fade-up" data-aos-delay="800">Experience precision grooming in a modern sanctuary.</p>
-                <a href="#booking" class="btn btn-primary" data-aos="fade-up" data-aos-delay="1000">Book Now</a>
+                <a href="#booking" class="btn btn-primary magnetic-btn" data-aos="fade-up" data-aos-delay="1000">Book Now</a>
             </div>
         </section>
 
@@ -87,25 +91,24 @@
                         <input type="date" id="date" name="date" required>
                         <input type="time" id="time" name="time" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Request Booking</button>
+                    <button type="submit" class="btn btn-primary magnetic-btn">Request Booking</button>
                 </form>
                  <div id="form-message" class="form-message"></div>
             </div>
         </section>
 
         <section id="testimonials" class="testimonials-section container">
-            <h2 class="section-title" data-aos="fade-up">What Our Clients Say</h2>
+            <h2 class="section-title" data-aos="fade-up">What My Roommates Say</h2>
             <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
                 <blockquote>"The best haircut I've had in years. The attention to detail is unmatched."</blockquote>
-                <cite>- Hari Sah</cite>
+                <cite>- Pranay KC</cite>
             </div>
             <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
                 <blockquote>"A truly luxurious experience from start to finish. I'll be back."</blockquote>
-                <cite>- Pranay KC</cite>
+                <cite>- Hari Sah</cite>
             </div>
-
             <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-                <blockquote>"Dami Babal Haircut"</blockquote>
+                <blockquote>"Dami babal haircut master."</blockquote>
                 <cite>- Prajwal Shah</cite>
             </div>
         </section>
@@ -115,12 +118,12 @@
                 <h2 class="section-title">Get In Touch</h2>
                 <div class="contact-grid">
                     <div class="contact-info">
-                        <p><i class="fas fa-map-marker-alt"></i> Sk apartment</p>
+                        <p><i class="fas fa-map-marker-alt"></i> SK ko apartment</p>
                         <p><i class="fas fa-phone"></i> (555) 123-4567</p>
-                        <p><i class="fas fa-envelope"></i> sk@barber-app.com</p>
+                        <p><i class="fas fa-envelope"></i> kathayatsubodh@gmail.com</p>
                     </div>
                     <div class="contact-map">
-                         <iframe src="http://googleusercontent.com/maps.google.com/2" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.837887552202!2d-74.17424168459483!3d40.72152897933095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2537f7e4322d7%3A0x89525494160a086!2sNewark%2C%20NJ!5e0!3m2!1sen!2sus!4v1627499117628!5m2!1sen!2sus" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
@@ -129,9 +132,11 @@
     
     <footer class="main-footer">
         <div class="container">
-            <p>© 2025 Barber-App. All Rights Reserved.</p>
+            <p>© 2025 Mr. SK. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <a href="#home" id="back-to-top-btn" class="back-to-top-btn"><i class="fas fa-arrow-up"></i></a>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://unpkg.com/split-type"></script>
