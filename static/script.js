@@ -1,66 +1,115 @@
-// static/script.js
-
 document.addEventListener('DOMContentLoaded', () => {
-    const servicesList = document.getElementById('services-list');
-    const serviceSelect = document.getElementById('service-select');
-    const bookingForm = document.getElementById('booking-form');
-    const successMessage = document.getElementById('success-message');
 
-    // 1. Fetch services and populate the page
-    fetch('/api/services')
-        .then(response => response.json())
-        .then(services => {
-            services.forEach(service => {
-                // Add to the list display
-                const li = document.createElement('li');
-                li.textContent = `${service.name} - $${service.price}`;
-                servicesList.appendChild(li);
+    // Feature 1: Pre-loader
+    const preloader = document.querySelector('.preloader');
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            preloader.classList.add('hidden');
+        }, 200);
+    });
+    
+    // Feature 2: Interactive Cursor
+    const cursor = document.querySelector('.custom-cursor');
+    const hoverElements = document.querySelectorAll('a, button, input, select, i');
 
-                // Add to the form dropdown
-                const option = document.createElement('option');
-                option.value = service.name;
-                option.textContent = `${service.name} ($${service.price})`;
-                serviceSelect.appendChild(option);
-            });
+    window.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+
+    hoverElements.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+
+    // Feature 3: Advanced GSAP Animations
+    const headline = new SplitType('.hero-headline', { types: 'chars' });
+    gsap.from(headline.chars, {
+        y: 100,
+        opacity: 0,
+        stagger: 0.05,
+        ease: 'power4.out',
+        duration: 1.5,
+        delay: 1 // Delay to start after preloader fades
+    });
+    
+    // Initialize AOS (Animate on Scroll)
+    AOS.init({
+        duration: 1000,
+        once: true,
+    });
+
+    // Sticky Header & Active Link Highlighting
+    const header = document.querySelector('.main-header');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.style.background = 'rgba(18, 18, 18, 0.95)';
+        } else {
+            header.style.background = 'rgba(18, 18, 18, 0.8)';
+        }
+
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - header.offsetHeight) {
+                current = section.getAttribute('id');
+            }
         });
 
-    // 2. Handle the booking form submission
-    bookingForm.addEventListener('submit', (event) => {
-        event.preventDefault(); // Prevent the default form submission (page reload)
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.add('active');
+            }
+        });
+    });
+    
+    // Form Submission
+    const bookingForm = document.getElementById('booking-form');
+    const formMessage = document.getElementById('form-message');
 
-        // Collect form data
-        const formData = new FormData(bookingForm);
-        const bookingDetails = {
-            name: formData.get('name'),
-            service: formData.get('service'),
-            date: formData.get('date'),
-            time: formData.get('time')
-        };
-        
-        // Send data to the backend
-        fetch('/api/book', {
+    bookingForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const service = document.getElementById('service').value;
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+
+        if (!name || !email || !service || !date || !time) {
+            showMessage('All fields are required.', 'error');
+            return;
+        }
+
+        const formData = { name, email, service, date, time };
+
+        fetch('/book-appointment', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(bookingDetails)
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
         })
         .then(response => response.json())
         .then(data => {
-            // Show success message and reset the form
-            successMessage.textContent = data.message;
-            successMessage.classList.remove('hidden');
+            showMessage(data.message, 'success');
             bookingForm.reset();
-
-            // Hide the message after a few seconds
-            setTimeout(() => {
-                successMessage.classList.add('hidden');
-            }, 5000);
         })
-        .catch(error => {
+        .catch((error) => {
             console.error('Error:', error);
-            successMessage.textContent = 'Something went wrong. Please try again.';
-            successMessage.classList.remove('hidden');
+            showMessage('An error occurred. Please try again.', 'error');
         });
     });
+    
+    function showMessage(message, type) {
+        formMessage.textContent = message;
+        formMessage.className = `form-message ${type}`;
+        formMessage.style.display = 'block';
+        
+        setTimeout(() => {
+            formMessage.style.display = 'none';
+        }, 5000);
+    }
 });

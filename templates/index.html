@@ -3,46 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Sharp Cut - Book an Appointment</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+    <title>Barber-App | Sharp Cuts. Smooth Style.</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>💈 The Sharp Cut Barbershop</h1>
-            <p>Book Your Next Appointment Online</p>
-        </header>
-
-        <main>
-            <section id="services-section">
-                <h2>Our Services</h2>
-                <ul id="services-list">
-                    </ul>
-            </section>
-
-            <section id="booking-section">
-                <h2>Book Now</h2>
-                <form id="booking-form">
-                    <label for="name">Your Name:</label>
-                    <input type="text" id="name" name="name" required>
-
-                    <label for="service">Choose a Service:</label>
-                    <select id="service-select" name="service" required>
-                        </select>
-
-                    <label for="date">Select a Date:</label>
-                    <input type="date" id="date" name="date" required>
-
-                    <label for="time">Select a Time:</label>
-                    <input type="time" id="time" name="time" required>
-
-                    <button type="submit">Book Appointment</button>
-                </form>
-                <p id="success-message" class="hidden"></p>
-            </section>
-        </main>
+    <div class="preloader">
+        <div class="preloader-logo">B</div>
     </div>
+    <div class="custom-cursor"></div>
 
+    <header class="main-header">
+        <nav class="main-nav container">
+            <a href="#home" class="nav-logo">Barber-App</a>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#booking" class="nav-link">Booking</a></li>
+                <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="hero-headline">Sharp Cuts. Smooth Style.</h1>
+                <p class="hero-subheadline" data-aos="fade-up" data-aos-delay="800">Experience precision grooming in a modern sanctuary.</p>
+                <a href="#booking" class="btn btn-primary" data-aos="fade-up" data-aos-delay="1000">Book Now</a>
+            </div>
+        </section>
+
+        <section id="services" class="services-section container">
+            <h2 class="section-title" data-aos="fade-up">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-cut"></i>
+                    <h3>Precision Haircut</h3>
+                    <p>A tailored cut designed to fit your style and personality.</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Beard Trim & Sculpt</h3>
+                    <p>Sharp lines and perfect shape for a distinguished look.</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-spa"></i>
+                    <h3>Hot Towel Facial</h3>
+                    <p>Relax and rejuvenate with our signature hot towel treatment.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="booking" class="booking-section">
+            <div class="container" data-aos="fade-up">
+                <h2 class="section-title">Book an Appointment</h2>
+                <form id="booking-form" class="booking-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="service" name="service" required>
+                            <option value="" disabled selected>Choose a Service</option>
+                            <option value="Precision Haircut">Precision Haircut</option>
+                            <option value="Beard Trim & Sculpt">Beard Trim & Sculpt</option>
+                            <option value="Hot Towel Facial">Hot Towel Facial</option>
+                        </select>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <input type="date" id="date" name="date" required>
+                        <input type="time" id="time" name="time" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Request Booking</button>
+                </form>
+                 <div id="form-message" class="form-message"></div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials-section container">
+            <h2 class="section-title" data-aos="fade-up">What Our Clients Say</h2>
+            <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                <blockquote>"The best haircut I've had in years. The attention to detail is unmatched."</blockquote>
+                <cite>- Hari Sah</cite>
+            </div>
+            <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                <blockquote>"A truly luxurious experience from start to finish. I'll be back."</blockquote>
+                <cite>- Pranay KC</cite>
+            </div>
+
+            <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                <blockquote>"Dami Babal Haircut"</blockquote>
+                <cite>- Prajwal Shah</cite>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+             <div class="container" data-aos="fade-up">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Sk apartment</p>
+                        <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                        <p><i class="fas fa-envelope"></i> sk@barber-app.com</p>
+                    </div>
+                    <div class="contact-map">
+                         <iframe src="http://googleusercontent.com/maps.google.com/2" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="main-footer">
+        <div class="container">
+            <p>© 2025 Barber-App. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
