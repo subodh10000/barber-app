@@ -22,3 +22,11 @@ A full-stack web application that allows customers to book and manage barber app
 ---
 
 ## 📂 Project Structure  
+barber-app/
+│── app.py # Main Flask application
+│── requirements.txt # Python dependencies
+│── Procfile # Deployment configuration (Heroku)
+│── appointments.db # SQLite database (local use)
+│── static/ # CSS, JS, images
+│── templates/ # HTML templates
+└── README.md # Project documentation
