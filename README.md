@@ -1,4 +1,4 @@
-# Barber Appointment Web App 💈  
+# Barber Appointment Web App 
 
 A full-stack web application that allows customers to book and manage barber appointments online. Built with **Flask, SQLite, HTML/CSS, and JavaScript**, this project demonstrates backend development, database integration, and responsive UI design.  
 
