@@ -19,3 +19,4 @@ A full-stack web application that allows customers to book and manage barber app
 - **Database:** SQLite (upgradeable to PostgreSQL/MySQL)  
 - **Deployment:** Heroku (via `Procfile`)  
 
+[![Watch the video](https://img.youtube.com/vi/5bG3jEAASsc/maxresdefault.jpg)](https://youtu.be/5bG3jEAASsc)
